@@ -105,7 +105,7 @@ if __name__ == '__main__':
             search_on_google(query)
 
         elif "send an email" in query:
-            speak("On what email address do I send sir? Please enter in the console: ")
+            speak("On what email address do I send miss? Please enter in the console: ")
             receiver_address = input("Enter email address: ")
             speak("What should be the subject miss?")
             subject = take_user_input().capitalize()
