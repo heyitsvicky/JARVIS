@@ -1,5 +1,6 @@
 import requests
 from online_fns import get_latest_news, get_random_advice, get_random_joke, get_trending_movies, get_weather_report, play_on_youtube, search_on_google, search_on_wikipedia, send_email, find_my_ip
+from sys_fns import open_spotify, open_cmd, open_notes, open_discord, open_minecraft
 import pyttsx3
 import speech_recognition as sr
 from decouple import config
@@ -55,13 +56,13 @@ def take_user_input():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print('Listening....')
-        r.pause_threshold = 1
+        r.pause_threshold = 0.5
         audio = r.listen(source)
 
     try:
         print('Recognizing...')
         query = r.recognize_google(audio, language='en-in')
-        if not 'exit' in query or 'stop' in query:
+        if not 'exit' in query or 'thank you' in query:
             speak(choice(opening_text))
         else:
             hour = datetime.now().hour
@@ -81,7 +82,22 @@ if __name__ == '__main__':
     while True:
         query = take_user_input().lower()
 
-        if 'ip address' in query:
+        if 'open notes' in query:
+            open_notes()
+
+        elif 'open discord' in query:
+            open_discord()
+
+        elif 'open command prompt' in query or 'open cmd' in query:
+            open_cmd()
+
+        elif 'open spotify' in query:
+            open_spotify()
+
+        elif 'open minecraft' in query:
+            open_minecraft()
+
+        elif 'ip address' in query:
             ip_address = find_my_ip()
             speak(f'Your IP Address is {ip_address}.\n For your convenience, I am printing it on the screen miss.')
             print(f'Your IP Address is {ip_address}')
@@ -148,5 +164,5 @@ if __name__ == '__main__':
             weather, temperature, feels_like = get_weather_report(city)
             speak(f"The current temperature is {temperature}, but it feels like {feels_like}")
             speak(f"Also, the weather report talks about {weather}")
-            speak("For your convenience, I am printing it on the screen sir.")
+            speak("For your convenience, I am printing it on the screen miss.")
             print(f"Description: {weather}\nTemperature: {temperature}\nFeels like: {feels_like}")
